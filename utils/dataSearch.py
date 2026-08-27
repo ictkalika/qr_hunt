@@ -12,3 +12,13 @@ def load_data():
         return {"error": "JSON data file not found"}
     except json.JSONDecodeError:
         return {"error": "Invalid JSON format"}
+
+
+def search_data(id):
+    data = load_data()
+    if "error" in data:
+        return data
+    for item in data:
+        if item["id"] == id:
+            return item
+    return {"error": "Item not found"}
