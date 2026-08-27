@@ -1,0 +1,62 @@
+{
+  "1": {
+    "question": "What does HTML stand for?",
+    "ans": "HyperText Markup Language"
+  },
+  "2": {
+    "question": "What programming language is known for using indentation?",
+    "ans": "Python"
+  },
+  "3": {
+    "question": "What does CSS stand for?",
+    "ans": "Cascading Style Sheets"
+  },
+  "4": {
+    "question": "What does API stand for?",
+    "ans": "Application Programming Interface"
+  },
+  "5": {
+    "question": "What does JSON stand for?",
+    "ans": "JavaScript Object Notation"
+  },
+  "6": {
+    "question": "What data structure follows FIFO?",
+    "ans": "Queue"
+  },
+  "7": {
+    "question": "What data structure follows LIFO?",
+    "ans": "Stack"
+  },
+  "8": {
+    "question": "What does SQL stand for?",
+    "ans": "Structured Query Language"
+  },
+  "9": {
+    "question": "What version control system uses git commit?",
+    "ans": "Git"
+  },
+  "10": {
+    "question": "What does HTTP stand for?",
+    "ans": "HyperText Transfer Protocol"
+  },
+  "11": {
+    "question": "Which keyword defines a function in Python?",
+    "ans": "def"
+  },
+  "12": {
+    "question": "What does IDE stand for?",
+    "ans": "Integrated Development Environment"
+  },
+  "13": {
+    "question": "What programming language is commonly used with React?",
+    "ans": "JavaScript"
+  },
+  "14": {
+    "question": "What symbol starts a single-line comment in JavaScript?",
+    "ans": "//"
+  },
+  "15": {
+    "question": "What does URL stand for?",
+    "ans": "Uniform Resource Locator"
+  }
+}
