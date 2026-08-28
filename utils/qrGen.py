@@ -1,3 +1,4 @@
+import io
 import os
 from pathlib import Path
 
@@ -5,19 +6,10 @@ import qrcode
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-QR_DIR = BASE_DIR / "qr_codes"
 
-
-def generate_qr(hex_code, filename):
+def generate_qr(hex_code):
 
     hex_code = hex_code.strip()
-
-    os.makedirs(QR_DIR, exist_ok=True)
-
-    if not filename.lower().endswith(".png"):
-        filename += ".png"
-
-    output_path = os.path.join(QR_DIR, filename)
 
     qr = qrcode.QRCode(
         version=None,
@@ -34,9 +26,13 @@ def generate_qr(hex_code, filename):
         back_color="white",
     )
 
-    img.save(output_path)
+    buffer = io.BytesIO()
 
-    return output_path
+    img.save(buffer, format="PNG")
+
+    buffer.seek(0)
+
+    return buffer
 
 
 if __name__ == "__main__":

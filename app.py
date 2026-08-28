@@ -19,8 +19,8 @@ def get_info(code):
 
 @app.route("/qr/<code>")
 def qr(code):
-    path = qrGen.generate_qr(code, "qr.png")
-    return send_file(path, mimetype="image/png")
+    qr_img = qrGen.generate_qr(code)
+    return send_file(qr_img, mimetype="image/png", download_name="qr_code.png")
 
 
 if __name__ == "__main__":
