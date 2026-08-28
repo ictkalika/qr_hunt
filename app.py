@@ -10,5 +10,12 @@ def home():
     return "Welcome to the QR Hunt"
 
 
+@app.route("/get-info/<code>")
+def get_info(code):
+    id = search_id(code)
+    data = search_data(id)
+    return jsonify(data)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
