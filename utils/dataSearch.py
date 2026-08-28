@@ -1,5 +1,4 @@
 import json
-import os
 from pathlib import Path
 
 # So, here I am trying to get the root directory of this app

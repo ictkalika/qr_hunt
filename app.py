@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template
 
+from utils.dataSearch import load_data, search_data, search_id
+
 app = Flask(__name__)
 
 
