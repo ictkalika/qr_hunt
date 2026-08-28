@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, send_file
 
 from utils import dataSearch, qrGen
 
@@ -15,6 +15,12 @@ def get_info(code):
     id = dataSearch.search_id(code)
     data = dataSearch.search_data(id)
     return jsonify(data)
+
+
+@app.route("/qr/<code>")
+def qr(code):
+    path = qrGen.generate_qr(code, "qr.png")
+    return send_file(path, mimetype="image/png")
 
 
 if __name__ == "__main__":
