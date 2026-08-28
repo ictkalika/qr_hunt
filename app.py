@@ -1,7 +1,6 @@
 from flask import Flask, jsonify, render_template
 
-from utils.dataSearch import load_data, search_data, search_id
-from utils.qrGen import generate_qr
+from utils import dataSearch, qrGen
 
 app = Flask(__name__)
 
@@ -13,8 +12,8 @@ def home():
 
 @app.route("/get-info/<code>")
 def get_info(code):
-    id = search_id(code)
-    data = search_data(id)
+    id = dataSearch.search_id(code)
+    data = dataSearch.search_data(id)
     return jsonify(data)
 
 
