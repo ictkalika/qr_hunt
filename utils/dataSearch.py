@@ -19,6 +19,18 @@ def load_data():
         return {"error": "Invalid JSON format"}
 
 
+def get_all_codes():
+    try:
+        with open(ID_FILE, "r", encoding="utf-8") as file:
+            id_map = json.load(file)
+        return list(id_map.keys())
+
+    except FileNotFoundError:
+        return {"error": "ID map file not found"}
+    except json.JSONDecodeError:
+        return {"error": "Invalid JSON format"}
+
+
 def search_id(hex_code):
     try:
         with open(ID_FILE, "r", encoding="utf-8") as file:
