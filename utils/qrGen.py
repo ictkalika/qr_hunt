@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 QR_DIR = BASE_DIR / "qr_codes"
 
 
-def generate_qr_code(hex_code, filename):
+def generate_qr(hex_code, filename):
 
     hex_code = hex_code.strip()
 
