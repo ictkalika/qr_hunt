@@ -1,14 +1,18 @@
 import json
+import os
 import random
 import string
 from pathlib import Path
 
-# So, here I am trying to get the root directory of this app
-BASE_DIR = Path(__file__).resolve().parent.parent
+# So, here I a
+# m trying to get the root directory of this app
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
 
-DATA_FILE = BASE_DIR / "data" / "data.json"
-ID_FILE = BASE_DIR / "data" / "id.json"
+DATA_FILE = DATA_DIR / "data.json"
+ID_FILE = DATA_DIR / "data" / "id.json"
 
 
 def load_data():
