@@ -31,9 +31,12 @@ def upload():
     if not question or not answer:
         return jsonify({"error": "Question and answer are required"}), 400
 
-    data.add_data(question, answer)
+    response = data.add_data(question, answer)
 
-    return jsonify({"message": "Question uploaded successfully"}), 201
+    if "error" in response:
+        return jsonify(response), 500
+
+    return jsonify(response), 201
 
 
 if __name__ == "__main__":

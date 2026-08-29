@@ -1,57 +1,60 @@
 import json
 import os
 import random
-import string
 from pathlib import Path
 
-# So, here I a
-# m trying to get the root directory of this app
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+
 
 if not os.path.exists(DATA_DIR):
     os.makedirs(DATA_DIR)
 
 DATA_FILE = DATA_DIR / "data.json"
-ID_FILE = DATA_DIR / "data" / "id.json"
+ID_FILE = DATA_DIR / "id.json"
 
 
-def load_data():
+def load_json(file_path):
     try:
-        with open(DATA_FILE, "r", encoding="utf-8") as file:
+        with open(file_path, "r", encoding="utf-8") as file:
+            content = file.read().strip()
+
+            if content == "" or content == "{" or content == "}":
+                return {}
+
+            file.seek(0)
             return json.load(file)
+
     except FileNotFoundError:
-        with open(DATA_FILE, "w", encoding="utf-8") as file:
-            json.dump({}, file)
+        with open(file_path, "w", encoding="utf-8") as file:
+            json.dump({}, file, indent=2)
+
         return {}
+
     except json.JSONDecodeError:
         return {"error": "Invalid JSON format"}
 
 
 def get_all_codes():
-    try:
-        with open(ID_FILE, "r", encoding="utf-8") as file:
-            id_map = json.load(file)
-        return list(id_map.keys())
+    id_map = load_json(ID_FILE)
 
-    except FileNotFoundError:
-        return {"error": "ID map file not found"}
-    except json.JSONDecodeError:
-        return {"error": "Invalid JSON format"}
+    if "error" in id_map:
+        return id_map
+
+    return list(id_map.keys())
 
 
 def search_id(hex_code):
-    try:
-        with open(ID_FILE, "r", encoding="utf-8") as file:
-            id_map = json.load(file)
-        return id_map.get(hex_code)
-    except FileNotFoundError:
-        return {"error": "ID map file not found"}
-    except json.JSONDecodeError:
-        return {"error": "Invalid JSON format"}
+    id_map = load_json(ID_FILE)
+
+    if "error" in id_map:
+        return id_map
+
+    return id_map.get(hex_code)
 
 
 def search_data(item_id):
-    data = load_data()
+    data = load_json(DATA_FILE)
+
     if "error" in data:
         return data
 
@@ -60,9 +63,15 @@ def search_data(item_id):
 
 def generate_hex_code():
     hex_list = get_all_codes()
+
+    if isinstance(hex_list, dict) and "error" in hex_list:
+        return hex_list
+
     hex_characters = "0123456789ABCDEF"
+
     while True:
         hex_code = ""
+
         for i in range(6):
             hex_code += random.choice(hex_characters)
 
@@ -71,20 +80,15 @@ def generate_hex_code():
 
 
 def add_data(question, answer):
-    data = load_data()
+    data = load_json(DATA_FILE)
 
     if "error" in data:
         return data
 
-    try:
-        with open(ID_FILE, "r", encoding="utf-8") as file:
-            id_map = json.load(file)
+    id_map = load_json(ID_FILE)
 
-    except FileNotFoundError:
-        return {"error": "ID map file not found"}
-
-    except json.JSONDecodeError:
-        return {"error": "Invalid JSON format"}
+    if "error" in id_map:
+        return id_map
 
     if not question or not question.strip():
         return {"error": "Question cannot be empty"}
@@ -96,14 +100,17 @@ def add_data(question, answer):
 
     hex_code = generate_hex_code()
 
-    data[str(new_id)] = {"question": question, "answer": answer}
+    if isinstance(hex_code, dict) and "error" in hex_code:
+        return hex_code
+
+    data[str(new_id)] = {"question": question.strip(), "answer": answer.strip()}
 
     id_map[hex_code] = new_id
 
     with open(DATA_FILE, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=2)
+        json.dump(data, file)
 
     with open(ID_FILE, "w", encoding="utf-8") as file:
-        json.dump(id_map, file, indent=2)
+        json.dump(id_map, file)
 
     return {"id": new_id, "hex_code": hex_code}
