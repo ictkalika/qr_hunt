@@ -1,4 +1,6 @@
 import json
+import random
+import string
 from pathlib import Path
 
 # So, here I am trying to get the root directory of this app
@@ -48,3 +50,13 @@ def search_data(item_id):
         return data
 
     return data.get(str(item_id), {"error": "Item not found"})
+
+
+def generate_hex_code(id_map):
+    hex_characters = "0123456789ABCDEF"
+    while True:
+        for i in range(6):
+            hex_code = "".join(random.choice(hex_characters)
+
+        if hex_code not in id_map:
+            return hex_code
