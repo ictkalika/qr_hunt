@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, render_template, send_file
+from flask import Flask, jsonify, render_template, request, send_file
 
-from utils import dataSearch, qrGen
+from utils import data, qrGen
 
 app = Flask(__name__)
 
@@ -12,8 +12,8 @@ def home():
 
 @app.route("/get-info/<code>")
 def get_info(code):
-    id = dataSearch.search_id(code)
-    data = dataSearch.search_data(id)
+    id = data.search_id(code)
+    data = data.search_data(id)
     return jsonify(data)
 
 
@@ -21,6 +21,19 @@ def get_info(code):
 def qr(code):
     qr_img = qrGen.generate_qr(code)
     return send_file(qr_img, mimetype="image/png", download_name="qr_code.png")
+
+
+@app.route("/upload", methods=["POST"])
+def upload():
+    body = request.get_json()
+    question = body.get("question")
+    answer = body.get("answer")
+    if not question or not answer:
+        return jsonify({"error": "Question and answer are required"}), 400
+
+    data.add_data(question, answer)
+
+    return jsonify({"message": "Question uploaded successfully"}), 201
 
 
 if __name__ == "__main__":
