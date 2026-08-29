@@ -56,8 +56,9 @@ def generate_hex_code():
     hex_list = get_all_codes()
     hex_characters = "0123456789ABCDEF"
     while True:
+        hex_code = ""
         for i in range(6):
-            hex_code = "".join(random.choice(hex_characters))
+            hex_code += random.choice(hex_characters)
 
         if hex_code not in hex_list:
             return hex_code
@@ -89,7 +90,7 @@ def add_data(question, answer):
 
     hex_code = generate_hex_code()
 
-    data[str(new_id)] = {"qn": question, "ans": answer}
+    data[str(new_id)] = {"question": question, "answer": answer}
 
     id_map[hex_code] = new_id
 
