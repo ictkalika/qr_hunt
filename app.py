@@ -12,9 +12,9 @@ def home():
 
 @app.route("/get-info/<code>")
 def get_info(code):
-    id = data.search_id(code)
-    data = data.search_data(id)
-    return jsonify(data)
+    item_id = data.search_id(code)
+    item_data = data.search_data(item_id)
+    return jsonify(item_data)
 
 
 @app.route("/qr/<code>")
